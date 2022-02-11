@@ -1,16 +1,25 @@
 TARGET = main.out
+TARGET_1 = test.out
 HDRS_DIR = project/include
 
-# XXX: Don't forget backslash at the end of any line except the last one
 SRCS = \
-       project/src/main.c \
-       project/src/utils.c \
-       project/src/prime.c
+project/src/main.c \
+project/src/process.c \
+project/src/changefile.c \
 
-.PHONY: all clean
+TESTS = project/src/test.c \
+project/src/changefile.c
 
-all: $(SRCS)
+
+.PHONY: all test clean
+
+all: main test
+
+main: $(SRCS)
 	$(CC) -Wall -Wextra -Werror -I $(HDRS_DIR) -o $(TARGET) $(CFLAGS) $(SRCS)
 
+test: $(TESTS)
+	$(CC) -Wall -Wextra -Werror -I $(HDRS_DIR) -o $(TARGET_1) $(CFLAGS) $(TESTS)
+
 clean:
-	rm -rf $(TARGET)
+	rm -rf $(TARGET) $(TARGET_1)
